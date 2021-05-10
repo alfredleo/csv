@@ -1,4 +1,4 @@
-# Neuffer developers-test
+# Developers-test
 
 We have prepared for you simple test task what as we believe, allow us to estimate your experience.
 It is a small php-script, which should be started in console like:
@@ -11,10 +11,12 @@ Script will take two required parameters:
 
 `{action}` - what action should we do with numbers from `{file}`, and can take next values:
 
-* <b>plus</b> - to count summ of the numbers on each row in the {file}
-* <b>minus</b> - to count difference between first number in the row and second
-* <b>multiply</b> - to multiply the numbers on each row in the {file} 
-* <b>division</b> - to divide  first number in the row and second
+<ul>
+<li><b>plus</b> - to count summ of the numbers on each row in the {file}</li>
+<li><b>minus</b> - to count difference between first number in the row and second</li>
+<li><b>multiply</b> - to multiply the numbers on each row in the {file} </li>
+<li><b>division</b> - to divide  first number in the row and second</li>
+</ul>
 
 
 As result of the command execution should be csv file with three columns: first number, second number, and result. In CSV-file should be written **ONLY** numbers greater than null. If result less than null - it should be written in logs.
@@ -58,9 +60,9 @@ After finishing - please push your code in your github/bitbucket account, and se
 
 ###Requirements
 
-* After refactoring code shoud work
-* Code should work on PHP7.2+
-* As file source example please use test.csv
+*After refactoring code shoud work</li>
+*Code should work on PHP7.2+</li>
+*As file source example please use test.csv</li>
 
 ###Result
 Please put result of your work in your Github or Bitbucket account, and send link back.
