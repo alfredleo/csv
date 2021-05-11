@@ -41,6 +41,18 @@ class Logger
         $this->logInfo($message);
     }
 
+    /**
+     * write in logs if numbers give wrong result
+     * @param int $value1
+     * @param int $value2
+     * @throws Exception
+     */
+    public function wrongDivisionLog(int $value1, int $value2): void
+    {
+        $message = "numbers " . $value1 . " and " . $value2 . " are wrong, is not allowed";
+        $this->logInfo($message);
+    }
+
 
     /**
      * check and delete main files before execution

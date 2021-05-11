@@ -34,17 +34,14 @@ if (isset($options['f'])) {
 }
 
 try {
+    $reader = new Reader($file);
     if ($action == "plus") {
-        $reader = new Reader($file);
         $reader->execute(new Plus());
     } elseif ($action == "minus") {
-        $reader = new Reader($file);
         $reader->execute(new Minus());
     } elseif ($action == "multiply") {
-        $reader = new Reader($file);
         $reader->execute(new Multiply());
     } elseif ($action == "division") {
-        $reader = new Reader($file);
         $reader->execute(new Division());
     } else {
         throw new Exception("Wrong action is selected");

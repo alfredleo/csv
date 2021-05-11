@@ -14,6 +14,6 @@ class Plus extends Action
      */
     public function getResult(int $value1, int $value2): int
     {
-        return $value2 + $value1;
+        return $value1 + $value2;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Actor\Library;
 
+use DivisionByZeroError;
 use Exception;
 
 class Reader
@@ -31,7 +32,7 @@ class Reader
 
     /**
      * main function, execute main code
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute(Action $action): void
     {
@@ -43,12 +44,18 @@ class Reader
         $handle = fopen($this->getFile(), 'r');
         while (($line = fgetcsv($handle)) !== FALSE) {
             list($value1, $value2) = $this->prepareValues($line[0]);
-            $result = $action->getResult($value1, $value2);
-            if ($this->isResultValid($result)) {
-                $logger->writeSuccessResult($value1, $value2, $result);
-            } else {
-                $logger->wrongResultLog($value1, $value2);
+
+            try {
+                $result = $action->getResult($value1, $value2);
+                if ($this->isResultValid($result)) {
+                    $logger->writeSuccessResult($value1, $value2, $result);
+                } else {
+                    $logger->wrongResultLog($value1, $value2);
+                }
+            } catch (DivisionByZeroError $e) {
+                $logger->wrongDivisionLog($value1, $value2);
             }
+
         }
 
         $logger->logInfo("Finished $action->name operation");
@@ -77,10 +84,22 @@ class Reader
     public function prepareValues(string $line): array
     {
         $line = explode(";", $line);
-        $value1 = intval(trim($line[0]));
-        $value2 = intval(trim($line[1]));
+        $value1 = $this->prepareNumber($line[0]);
+        $value2 = $this->prepareNumber($line[1]);
         return [$value1, $value2];
+    }
 
+
+    /**
+     * prepare number before action
+     * @param string $value
+     * @return int
+     */
+    private function prepareNumber(string $value): int
+    {
+        // remove \ufeff BOM character, no correct mb_trim function for that
+        $value = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', ($value));
+        return intval(trim($value));
     }
 
     /**
