@@ -1,10 +1,12 @@
 <?php
+
 // here we will make division
-class classFour{
+class Division
+{
 
     public function __construct($file)
     {
-        if(file_exists("log.txt")) {
+        if (file_exists("log.txt")) {
             unlink("log.txt");
         }
 
@@ -13,7 +15,7 @@ class classFour{
 
         $data = fopen($file, "r");
 
-        if(file_exists("result.csv")) {
+        if (file_exists("result.csv")) {
             unlink("result.csv");
         }
 
@@ -21,16 +23,16 @@ class classFour{
             $line = explode(";", $line);
             $line[0] = intval($line[0]);
             $line[1] = intval($line[1]);
-            if($line[1] === 0) {
-                fwrite($fp, "numbers ".$line[0] . " and ". $line[1]." are wrong \r\n");
+            if ($line[1] === 0) {
+                fwrite($fp, "numbers " . $line[0] . " and " . $line[1] . " are wrong \r\n");
                 continue;
             }
             $result = $line[0] / $line[1];
-            if($result < 0) {
-                fwrite($fp, "numbers ".$line[0] . " and ". $line[1]." are wrong \r\n");
+            if ($result < 0) {
+                fwrite($fp, "numbers " . $line[0] . " and " . $line[1] . " are wrong \r\n");
             } else {
                 $resultHandle = fopen("result.csv", "a+");
-                $result = $line[0].";".$line[1].";".$result."\r\n";
+                $result = $line[0] . ";" . $line[1] . ";" . $result . "\r\n";
                 fwrite($resultHandle, $result);
                 fclose($resultHandle);
             }

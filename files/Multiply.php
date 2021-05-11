@@ -1,6 +1,8 @@
 <?php
+
 // here we will make multiplication
-class Classthree {
+class Multiply
+{
 
     private $file = null;
     private $resultHandler;
@@ -35,11 +37,11 @@ class Classthree {
 
         $this->logInfo("Started multiply operation");
 
-        $handle = fopen($this->getFile(),'r');
-        while ( ($line = fgetcsv($handle) ) !== FALSE ) {
+        $handle = fopen($this->getFile(), 'r');
+        while (($line = fgetcsv($handle)) !== FALSE) {
             list($value1, $value2) = $this->prepareValues($line[0]);
             $result = $this->countResult($value1, $value2);
-            if($this->isResultValid($result)) {
+            if ($this->isResultValid($result)) {
                 $this->writeSuccessResult($value1, $value2, $result);
             } else {
                 $this->wrongResultLog($value1, $value2);
@@ -55,9 +57,9 @@ class Classthree {
      * @param int $value2
      * @throws Exception
      */
-    private function wrongResultLog(int $value1, int $value2) : void
+    private function wrongResultLog(int $value1, int $value2): void
     {
-        $message = "numbers ".$value1 . " and ". $value2." are wrong";
+        $message = "numbers " . $value1 . " and " . $value2 . " are wrong";
         $this->logInfo($message);
     }
 
@@ -66,9 +68,9 @@ class Classthree {
      * @param int $result
      * @return bool
      */
-    private function isResultValid(int $result) : bool
+    private function isResultValid(int $result): bool
     {
-        if($result > 0)
+        if ($result > 0)
             return true;
 
         return false;
@@ -80,7 +82,7 @@ class Classthree {
      * @param int $value2
      * @return int
      */
-    private function countResult(int $value1, int $value2) : int
+    private function countResult(int $value1, int $value2): int
     {
         return $value2 * $value1;
     }
@@ -90,7 +92,7 @@ class Classthree {
      * @param string $line
      * @return array
      */
-    private function prepareValues(string $line) : array
+    private function prepareValues(string $line): array
     {
         $line = explode(";", $line);
         $value1 = $this->prepareNumber($line[0]);
@@ -104,7 +106,7 @@ class Classthree {
      * @param string $value
      * @return int
      */
-    private function prepareNumber(string $value) : int
+    private function prepareNumber(string $value): int
     {
         $value = trim($value);
         $value = intval($value);
@@ -115,16 +117,17 @@ class Classthree {
      * @return bool
      * @throws Exception
      */
-    private function validateResourceFile() : void {
-        if($this->getFile() === null) {
+    private function validateResourceFile(): void
+    {
+        if ($this->getFile() === null) {
             throw new \Exception("Please define file with data");
         }
 
-        if(!file_exists($this->getFile())) {
+        if (!file_exists($this->getFile())) {
             throw new \Exception("Please define file with data");
         }
 
-        if(!is_readable($this->getFile())) {
+        if (!is_readable($this->getFile())) {
             throw new \Exception("We have not rights to read this file");
         }
     }
@@ -133,15 +136,15 @@ class Classthree {
     /**
      * check and delete main files before execution
      */
-    private function prepareFiles() : void
+    private function prepareFiles(): void
     {
         //delete log file if it is already exists
-        if($this->isLogFileExists()) {
+        if ($this->isLogFileExists()) {
             unlink(self::LOG_FILE);
         }
 
         //delete result file if it already exists
-        if($this->isResultFileExists()) {
+        if ($this->isResultFileExists()) {
             unlink(self::RESULT_FILE);
         }
     }
@@ -157,7 +160,7 @@ class Classthree {
     /**
      * @return string
      */
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -166,7 +169,7 @@ class Classthree {
      * check if result file already exists
      * @return bool
      */
-    private function isResultFileExists() : bool
+    private function isResultFileExists(): bool
     {
         return file_exists(self::RESULT_FILE);
     }
@@ -174,7 +177,7 @@ class Classthree {
     /**
      * @return bool
      */
-    private function isLogFileExists() : bool
+    private function isLogFileExists(): bool
     {
         return file_exists(self::LOG_FILE);
     }
@@ -184,9 +187,9 @@ class Classthree {
      * @param string $message
      * @throws Exception
      */
-    private function logInfo(string $message) : void
+    private function logInfo(string $message): void
     {
-        $message = $message."\r\n";
+        $message = $message . "\r\n";
         fwrite($this->logHandler, $message);
     }
 
@@ -194,9 +197,9 @@ class Classthree {
      * write message in result file
      * @param string $message
      */
-    private function successInfo(string $message) : void
+    private function successInfo(string $message): void
     {
-        $message = $message."\r\n";
+        $message = $message . "\r\n";
         fwrite($this->resultHandler, $message);
     }
 
@@ -206,7 +209,7 @@ class Classthree {
      * @param int $value2
      * @param int $result
      */
-    private function writeSuccessResult(int $value1, int $value2, int $result) : void
+    private function writeSuccessResult(int $value1, int $value2, int $result): void
     {
         $message = implode(";", [$value1, $value2, $result]);
         $this->successInfo($message);
@@ -216,17 +219,17 @@ class Classthree {
      * prepare handlers to writing
      * @throws Exception
      */
-    private function prepareHanders() : void
+    private function prepareHanders(): void
     {
         $this->logHandler = fopen(self::LOG_FILE, "a+");
 
-        if($this->logHandler === false) {
+        if ($this->logHandler === false) {
             throw new \Exception("Log File cannot be open for writing");
         }
 
         $this->resultHandler = fopen(self::RESULT_FILE, "a+");
 
-        if($this->resultHandler === false) {
+        if ($this->resultHandler === false) {
             throw new \Exception("Result File cannot be open for writing");
         }
     }
@@ -234,10 +237,9 @@ class Classthree {
     /**
      * close opened handlers
      */
-    private function closeHandlers() : void
+    private function closeHandlers(): void
     {
         fclose($this->logHandler);
         fclose($this->resultHandler);
     }
 }
-?>

@@ -26,22 +26,23 @@ if (isset($options['f'])) {
 
 try {
     if ($action == "plus") {
-        include 'files/ClassOne.php';
-        $classOne = new ClassOne($file);
+        include 'files/Plus.php';
+        $classOne = new Plus($file);
     } elseif ($action == "minus") {
-        include 'files/ClassTwo.php';
-        $classTwo = new ClassTwo($file, "minus");
+        include 'files/Minus.php';
+        $classTwo = new Minus($file, "minus");
         $classTwo->start();
     } elseif ($action == "multiply") {
-        include 'files/Classthree.php';
-        $classThree = new Classthree();
+        include 'files/Multiply.php';
+        $classThree = new Multiply();
         $classThree->setFile($file);
         $classThree->execute();
     } elseif ($action == "division") {
-        include 'files/classFour.php';
-        $classFouyr = new classFour($file);
+        include 'files/Division.php';
+        $classFour = new Division($file);
     } else {
         throw new Exception("Wrong action is selected");
     }
 } catch (Exception $exception) {
+    echo $exception->getMessage();
 }

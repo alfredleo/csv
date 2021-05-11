@@ -1,6 +1,7 @@
 <?php
+
 //here we will get minus
-class ClassTwo
+class Minus
 {
     private $file;
     private $action;
@@ -17,9 +18,9 @@ class ClassTwo
         fwrite($fp, "Started minus operation \r\n");
 
         $data = fopen($this->file, "r");
-        if(!$data) throw new \Exception("File cannot be openned");
+        if (!$data) throw new \Exception("File cannot be openned");
 
-        if(file_exists("result.csv")) {
+        if (file_exists("result.csv")) {
             unlink("result.csv");
         }
 
@@ -28,11 +29,11 @@ class ClassTwo
             $line[0] = intval($line[0]);
             $line[1] = intval($line[1]);
             $result = $line[0] - $line[1];
-            if($result < 0) {
-                fwrite($fp, "numbers ".$line[0] . " and ". $line[1]." are wrong \r\n");
+            if ($result < 0) {
+                fwrite($fp, "numbers " . $line[0] . " and " . $line[1] . " are wrong \r\n");
             } else {
                 $resultHandle = fopen("result.csv", "a+");
-                $result = $line[0].";".$line[1].";".$result."\r\n";
+                $result = $line[0] . ";" . $line[1] . ";" . $result . "\r\n";
                 fwrite($resultHandle, $result);
                 fclose($resultHandle);
             }
