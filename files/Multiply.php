@@ -17,7 +17,7 @@ class Multiply
     public function __construct()
     {
         $this->prepareFiles();
-        $this->prepareHanders();
+        $this->prepareHandlers();
     }
 
     /**
@@ -108,27 +108,25 @@ class Multiply
      */
     private function prepareNumber(string $value): int
     {
-        $value = trim($value);
-        $value = intval($value);
-        return $value;
+        return intval(trim($value));
     }
 
     /**
-     * @return bool
+     * @return void
      * @throws Exception
      */
     private function validateResourceFile(): void
     {
         if ($this->getFile() === null) {
-            throw new \Exception("Please define file with data");
+            throw new Exception("Please define file with data");
         }
 
         if (!file_exists($this->getFile())) {
-            throw new \Exception("Please define file with data");
+            throw new Exception("Please define file with data");
         }
 
         if (!is_readable($this->getFile())) {
-            throw new \Exception("We have not rights to read this file");
+            throw new Exception("We have not rights to read this file");
         }
     }
 
@@ -219,18 +217,18 @@ class Multiply
      * prepare handlers to writing
      * @throws Exception
      */
-    private function prepareHanders(): void
+    private function prepareHandlers(): void
     {
         $this->logHandler = fopen(self::LOG_FILE, "a+");
 
         if ($this->logHandler === false) {
-            throw new \Exception("Log File cannot be open for writing");
+            throw new Exception("Log File cannot be open for writing");
         }
 
         $this->resultHandler = fopen(self::RESULT_FILE, "a+");
 
         if ($this->resultHandler === false) {
-            throw new \Exception("Result File cannot be open for writing");
+            throw new Exception("Result File cannot be open for writing");
         }
     }
 

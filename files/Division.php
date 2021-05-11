@@ -28,6 +28,7 @@ class Division
                 continue;
             }
             $result = $line[0] / $line[1];
+            // duplicate code
             if ($result < 0) {
                 fwrite($fp, "numbers " . $line[0] . " and " . $line[1] . " are wrong \r\n");
             } else {

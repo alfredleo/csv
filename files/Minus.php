@@ -4,21 +4,22 @@
 class Minus
 {
     private $file;
-    private $action;
 
-    public function __construct($file, $action = "minus")
+    public function __construct($file)
     {
         $this->file = $file;
-        $this->action = $action;
     }
 
+    /**
+     * @throws Exception
+     */
     public function start()
     {
         $fp = fopen("log.txt", "w+");
         fwrite($fp, "Started minus operation \r\n");
 
         $data = fopen($this->file, "r");
-        if (!$data) throw new \Exception("File cannot be openned");
+        if (!$data) throw new Exception("File cannot be opened");
 
         if (file_exists("result.csv")) {
             unlink("result.csv");
@@ -29,6 +30,7 @@ class Minus
             $line[0] = intval($line[0]);
             $line[1] = intval($line[1]);
             $result = $line[0] - $line[1];
+            // duplicate code
             if ($result < 0) {
                 fwrite($fp, "numbers " . $line[0] . " and " . $line[1] . " are wrong \r\n");
             } else {

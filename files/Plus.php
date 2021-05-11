@@ -7,7 +7,6 @@ class Plus
     {
         $this->start();
         $fp = fopen($file, "r");
-        $row = 1;
         while (($data = fgetcsv($fp, 1000, ";")) !== FALSE) {
             if ($this->isGood($data[0], $data[1])) {
                 $this->result($data[0], $data[1]);
@@ -19,7 +18,7 @@ class Plus
         $this->stop();
     }
 
-    function isGood($a, $b)
+    function isGood($a, $b): bool
     {
         if ($a < 0 && $b < 0) return false;
         if ($a < 0 && (abs($a) > $b)) return false;
