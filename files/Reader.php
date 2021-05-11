@@ -8,10 +8,12 @@ use Exception;
 class Reader
 {
     private $file = null;
+    private $logger = null;
 
-    public function __construct($file)
+    public function __construct($file, Logger $logger)
     {
         $this->file = $file;
+        $this->logger = $logger;
     }
 
     /**
@@ -36,10 +38,9 @@ class Reader
      */
     public function execute(Action $action): void
     {
-        $logger = new Logger(); // DI later
         $this->validateResourceFile();
 
-        $logger->logInfo("Started $action->name operation");
+        $this->logger->logInfo("Started $action->name operation");
 
         $handle = fopen($this->getFile(), 'r');
         while (($line = fgetcsv($handle)) !== FALSE) {
@@ -48,17 +49,17 @@ class Reader
             try {
                 $result = $action->getResult($value1, $value2);
                 if ($this->isResultValid($result)) {
-                    $logger->writeSuccessResult($value1, $value2, $result);
+                    $this->logger->writeSuccessResult($value1, $value2, $result);
                 } else {
-                    $logger->wrongResultLog($value1, $value2);
+                    $this->logger->wrongResultLog($value1, $value2);
                 }
             } catch (DivisionByZeroError $e) {
-                $logger->wrongDivisionLog($value1, $value2);
+                $this->logger->wrongDivisionLog($value1, $value2);
             }
 
         }
 
-        $logger->logInfo("Finished $action->name operation");
+        $this->logger->logInfo("Finished $action->name operation");
     }
 
     /**

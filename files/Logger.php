@@ -4,12 +4,17 @@ namespace Actor\Library;
 
 use Exception;
 
+/**
+ * Class Logger
+ * Can be set with static calls
+ * @package Actor\Library
+ */
 class Logger
 {
     private $resultHandler;
     private $logHandler;
-    private const LOG_FILE = "log.txt";
-    private const RESULT_FILE = "result.csv";
+    private const LOG_FILE = "log.txt"; // those file path could be set on logger start
+    private const RESULT_FILE = "result.csv"; // for simplicity I left them as is
 
     /**
      * Logger constructor.
