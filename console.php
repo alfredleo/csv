@@ -1,5 +1,14 @@
 <?php
 
+use Actor\Library\Division;
+use Actor\Library\Minus;
+use Actor\Library\Multiply;
+use Actor\Library\Plus;
+use Actor\Library\Reader;
+
+require 'vendor/autoload.php';
+
+
 $shortOpts = "a:f:";
 $longOpts = array(
     "action:",
@@ -26,20 +35,17 @@ if (isset($options['f'])) {
 
 try {
     if ($action == "plus") {
-        include 'files/Plus.php';
-        $classOne = new Plus($file);
+        $reader = new Reader($file);
+        $reader->execute(new Plus());
     } elseif ($action == "minus") {
-        include 'files/Minus.php';
-        $classTwo = new Minus($file);
-        $classTwo->start();
+        $reader = new Reader($file);
+        $reader->execute(new Minus());
     } elseif ($action == "multiply") {
-        include 'files/Multiply.php';
-        $classThree = new Multiply();
-        $classThree->setFile($file);
-        $classThree->execute();
+        $reader = new Reader($file);
+        $reader->execute(new Multiply());
     } elseif ($action == "division") {
-        include 'files/Division.php';
-        $classFour = new Division($file);
+        $reader = new Reader($file);
+        $reader->execute(new Division());
     } else {
         throw new Exception("Wrong action is selected");
     }
