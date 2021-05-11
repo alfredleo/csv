@@ -1,12 +1,12 @@
 <?php
 
-$shortopts = "a:f:";
-$longopts = array(
+$shortOpts = "a:f:";
+$longOpts = array(
     "action:",
     "file:",
 );
 
-$options = getopt($shortopts, $longopts);
+$options = getopt($shortOpts, $longOpts);
 
 if (isset($options['a'])) {
     $action = $options['a'];
@@ -30,7 +30,7 @@ try {
         $classOne = new Plus($file);
     } elseif ($action == "minus") {
         include 'files/Minus.php';
-        $classTwo = new Minus($file, "minus");
+        $classTwo = new Minus($file);
         $classTwo->start();
     } elseif ($action == "multiply") {
         include 'files/Multiply.php';
